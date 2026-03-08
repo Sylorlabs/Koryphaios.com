@@ -9,8 +9,8 @@ const problems = [
         <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
       </svg>
     ),
-    title: "Provider Chaos",
-    desc: "You're running Claude in one tab, GPT in another, Cursor on the side, and Gemini in the terminal. Nothing connects. Nothing shares context. You're the glue holding it all together, and you're failing at it.",
+    title: "Too Many Tools",
+    desc: "Claude in one tab, GPT in another, Cursor on the side. You're the glue holding it all together.",
   },
   {
     icon: (
@@ -19,8 +19,8 @@ const problems = [
         <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
       </svg>
     ),
-    title: "Invisible Burn Rate",
-    desc: "You have no idea what you're spending. Each provider has different pricing, different token counts, different billing cycles. The invoice arrives and it's a surprise every time. That's not engineering — that's gambling.",
+    title: "Surprise Bills",
+    desc: "Different providers, different pricing, different billing cycles. The invoice arrives and it's always a shock.",
   },
   {
     icon: (
@@ -31,8 +31,8 @@ const problems = [
         <line x1="14" y1="11" x2="14" y2="17"/>
       </svg>
     ),
-    title: "No Undo. No Safety Net.",
-    desc: "An AI agent rewrites your file and breaks everything. You hit Ctrl+Z or git revert and get a messy commit history with no context about what was tried, what it cost, or which model did it. One bad generation buried in undifferentiated commits can cost you hours of archaeology.",
+    title: "No Safety Net",
+    desc: "AI breaks your code and undoing means messy commits with zero context about what was tried or what it cost.",
   },
 ];
 
@@ -53,11 +53,8 @@ export default function Problem() {
             Your workflow is broken.
           </h2>
           <p className="text-[var(--text-secondary)] max-w-2xl mx-auto mb-12">
-            Tools like CrewAI and AutoGen proved multi agent orchestration works.
-            But you still wire it together yourself — switching models, reviewing output,
-            tracking costs, recovering from mistakes. That&apos;s not vibe coding.
-            That&apos;s infrastructure work. Koryphaios is the native desktop app that
-            handles it all so you don&apos;t have to.
+            Multi-agent tools exist, but you're still the manager — switching models,
+            reviewing output, tracking costs. That's not vibe coding. That's infrastructure work.
           </p>
 
           <div className="grid md:grid-cols-3 gap-6">

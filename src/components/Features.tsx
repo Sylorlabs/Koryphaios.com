@@ -21,8 +21,8 @@ const features: Feature[] = [
       </svg>
     ),
     title: "Manager Worker Critic",
-    desc: "The Critic is what sets this apart. Claude Code can spawn subagents, Cursor can run parallel workers — but neither routes every output through a dedicated read only Critic that gates with PASS or FAIL before results reach you. That quality gate is baked into the architecture, not bolted on. Bad output never reaches you.",
-    highlight: "Critic gate is the difference",
+    desc: "Every output routes through a read-only Critic that gates with PASS or FAIL. Bad code never reaches you — it's baked into the architecture.",
+    highlight: "Quality gate at the core",
   },
   {
     icon: (
@@ -32,8 +32,8 @@ const features: Feature[] = [
       </svg>
     ),
     title: "Ghost Commits",
-    desc: "Cursor and Aider commit AI changes to your branch. Claude Code added a --worktree flag in early 2026. Koryphaios does something different: ghost commits are dangling git objects stored off your branch entirely, with cost, tokens, model, and prompt hash in git notes. Your branch history stays clean. Roll back one agent without touching another's work. No other tool stores this metadata.",
-    highlight: "Dangling objects with full metadata",
+    desc: "Dangling git objects stored off your branch with full metadata: cost, tokens, model, prompt hash. Roll back to any state. Your history stays clean.",
+    highlight: "Time travel for your code",
   },
   {
     icon: (
@@ -45,8 +45,8 @@ const features: Feature[] = [
       </svg>
     ),
     title: "Parallel Agent Isolation",
-    desc: "Cursor 2.0 and Claude Code both support git worktrees for parallel agents now. What Koryphaios adds is enforced file system sandboxing per role — Workers are restricted at the API level to only the paths they were granted. Two agents editing overlapping files is a configuration error, not a race condition you have to discover after the fact.",
-    highlight: "API level path enforcement",
+    desc: "Workers run in separate git worktrees with API-level path enforcement. No race conditions, no overwrites, no surprises.",
+    highlight: "True isolation",
   },
   {
     icon: (
@@ -56,8 +56,8 @@ const features: Feature[] = [
       </svg>
     ),
     title: "Real Time Cost Tracking",
-    desc: "Claude Code has a /cost command. Cursor shows a monthly credit bar. Koryphaios meters every API call in real time per provider, per model, per session, per token — visible in the UI as it happens, not after the fact. Running 6 parallel agents across 3 providers? You see exactly what each one is burning, live.",
-    highlight: "Live · per model · per session",
+    desc: "Per provider, per model, per session, per token — visible live as it happens. Running 6 agents across 3 providers? See exactly what each burns.",
+    highlight: "No more surprise bills",
   },
   {
     icon: (
@@ -68,8 +68,8 @@ const features: Feature[] = [
       </svg>
     ),
     title: "MCP Integration",
-    desc: "Cursor, Claude Code, and Windsurf all support MCP. So does Koryphaios — stdio and SSE transports, full tool, resource, and prompt support. This is table stakes in 2026 and Koryphaios ships it. Plug in any MCP server and your agents can use it immediately. No config gymnastics.",
-    highlight: "Stdio + SSE · full spec support",
+    desc: "Stdio and SSE transports, full tool, resource, and prompt support. Plug in any MCP server and your agents use it immediately.",
+    highlight: "Universal compatibility",
   },
   {
     icon: (
@@ -79,8 +79,8 @@ const features: Feature[] = [
       </svg>
     ),
     title: "Role Based Security",
-    desc: "Manager has full unsandboxed access. Workers are restricted to explicitly granted files and paths at the API level. The Critic is read only — it cannot write or execute anything. JWT auth, 120 req/min rate limiting, CORS enforcement, encrypted API key storage. Three permission tiers. No tool in this space enforces them this strictly.",
-    highlight: "Three tiers · enforced at API level",
+    desc: "Three permission tiers enforced at the API level: Manager (full access), Workers (path-restricted), Critic (read-only). JWT auth, rate limiting, encrypted storage.",
+    highlight: "Defense in depth",
   },
   {
     icon: (
@@ -89,8 +89,8 @@ const features: Feature[] = [
       </svg>
     ),
     title: "Real Time Streaming",
-    desc: "WebSocket first, SSE fallback. 30+ distinct event types: agent spawns, routing decisions, tool calls, Critic verdicts, ghost commit writes, cost updates, circuit breaker trips. Every decision the system makes is observable as it happens. You are never waiting on a black box.",
-    highlight: "30+ event types · full observability",
+    desc: "WebSocket first, SSE fallback. 30+ event types: agent spawns, tool calls, Critic verdicts, cost updates. Full observability, zero black boxes.",
+    highlight: "See everything",
   },
   {
     icon: (
@@ -101,8 +101,8 @@ const features: Feature[] = [
       </svg>
     ),
     title: "Native Desktop App",
-    desc: "Cursor and Windsurf are VS Code forks — Electron apps that inherit its memory footprint. Claude Code is a CLI tool. Koryphaios is built with Tauri: a native binary under 100MB on Windows, macOS, and Linux. System tray, file drops, native menus, local data. No subscription to an IDE you didn't ask for.",
-    highlight: "Tauri · not a VS Code fork",
+    desc: "Built with Tauri: under 100MB native binary on Windows, macOS, and Linux. No Electron bloat, no VS Code subscription. System tray, native menus, local data.",
+    highlight: "Lean and native",
   },
 ];
 
@@ -121,7 +121,7 @@ export default function Features() {
         >
           <span className="kintsugi-badge mb-6 inline-flex">Capabilities</span>
           <h2 className="text-3xl md:text-5xl font-bold text-[var(--porcelain)]">
-            The details that actually matter.
+            Built different.
           </h2>
         </motion.div>
 

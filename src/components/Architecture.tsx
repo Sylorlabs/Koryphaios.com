@@ -7,7 +7,7 @@ const steps = [
     role: "You",
     color: "#F6EFE2",
     label: "input",
-    text: '"Build a full-stack analytics dashboard with charts, API routes, and tests."',
+    text: "One prompt. The Manager handles the rest.",
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="#F6EFE2"><circle cx="12" cy="12" r="10"/></svg>
     ),
@@ -16,34 +16,16 @@ const steps = [
     role: "Kory (Manager)",
     color: "#D5B261",
     label: "orchestrator",
-    text: "Classifies domain via keyword scoring. Routes frontend to openai:gpt-5.3-codex, backend to google:gemini-3.1-pro, tests to anthropic:claude-sonnet-4.6. Builds fallback chains. Spawns 3 workers in isolated git worktrees.",
+    text: "Classifies tasks, picks the best models, builds fallback chains, spawns workers in isolated git worktrees.",
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="#D5B261"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
     ),
   },
   {
-    role: "Worker: Frontend",
+    role: "Workers",
     color: "#10B981",
-    label: "sandboxed · gpt-5.3-codex",
-    text: "Executes in worktree. Runs write_file, edit_file, bash. Sandboxed to src/components/ and src/routes/ only. Cannot access backend files. Streams token by token via WebSocket.",
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="#10B981"><rect x="2" y="2" width="20" height="20" rx="4"/></svg>
-    ),
-  },
-  {
-    role: "Worker: Backend",
-    color: "#10B981",
-    label: "sandboxed · gemini 3.1 pro",
-    text: "Separate worktree. Runs write_file, bash, grep, read_file. Sandboxed to src/routes/api/ and src/lib/server/. Parallel execution — no file conflicts with frontend worker.",
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="#10B981"><rect x="2" y="2" width="20" height="20" rx="4"/></svg>
-    ),
-  },
-  {
-    role: "Worker: Testing",
-    color: "#10B981",
-    label: "sandboxed · claude sonnet 4.6",
-    text: "Third worktree. Reads other workers' output to understand what to test. Writes integration tests. Runs bash to execute test suite. Reports coverage.",
+    label: "sandboxed · parallel",
+    text: "Multiple specialists run simultaneously in separate worktrees. Each sandboxed to specific paths — no conflicts, no overwrites.",
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="#10B981"><rect x="2" y="2" width="20" height="20" rx="4"/></svg>
     ),
@@ -51,8 +33,8 @@ const steps = [
   {
     role: "Critic",
     color: "#60A5FA",
-    label: "read only · review gate",
-    text: "Inspects all worker output using read_file, grep, glob, ls. Cannot modify anything. Reviews for bugs, missing edge cases, incorrect implementations. Returns PASS or FAIL with specific line level feedback.",
+    label: "read only · quality gate",
+    text: "Reviews all output before you see it. Returns PASS or FAIL with line-level feedback. Bad code never reaches you.",
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="#60A5FA"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg>
     ),
@@ -60,8 +42,8 @@ const steps = [
   {
     role: "Shadow Logger",
     color: "#8B5CF6",
-    label: "ghost commits · undo system",
-    text: "Creates a dangling git commit for every change with metadata: cost ($0.08), tokens (4,103), model (claude sonnet 4.6), prompt hash. Stored in git notes. Reset to any state via git reset. Branch stays clean.",
+    label: "ghost commits · undo",
+    text: "Every change stored as a dangling commit with cost, tokens, model, and prompt hash. Time travel to any state. Your branch stays clean.",
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="#8B5CF6"><circle cx="12" cy="12" r="10"/></svg>
     ),
@@ -92,9 +74,7 @@ export default function Architecture() {
             Agents that manage themselves.
           </h2>
           <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
-            The Manager-Worker-Critic pattern means every task is delegated,
-            executed in isolation, and reviewed — automatically. You give one instruction.
-            The system handles delegation, execution, quality control, and rollback.
+            One instruction. The system handles delegation, execution, quality control, and rollback.
           </p>
         </motion.div>
 

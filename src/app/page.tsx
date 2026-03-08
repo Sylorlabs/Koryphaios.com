@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
-import VibeCoder from "@/components/VibeCoder";
 import Features from "@/components/Features";
 import Providers from "@/components/Providers";
 import Architecture from "@/components/Architecture";
@@ -16,10 +15,9 @@ export default function Home() {
       <main>
         <Hero />
         <Problem />
-        <VibeCoder />
+        <Architecture />
         <Features />
         <Providers />
-        <Architecture />
         <OpenSource />
         <CTA />
       </main>
