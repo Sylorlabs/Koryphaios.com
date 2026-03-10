@@ -2,6 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Hook to detect mobile viewport
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
 import {
   Settings, Activity, ChevronDown, GitBranch, Zap, Search,
   MessageSquare, ArrowDown, Paintbrush, Bug, Beaker,
@@ -242,18 +254,20 @@ export default function AppPreview() {
       <div className="relative rounded-xl overflow-hidden app-preview-demo" style={{ background: S0, border: `1px solid ${BORDER}`, fontFamily: "'Inter', -apple-system, sans-serif", boxShadow: `0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px ${BORDER}` }}>
 
         {/* ── macOS Title Bar ──────────────────────────────────────────── */}
-        <div className="flex items-center px-4 relative shrink-0" style={{ height: 36, background: S1, borderBottom: `1px solid ${BORDER}` }}>
+        <div className="flex items-center px-3 md:px-4 relative shrink-0" style={{ height: 36, background: S1, borderBottom: `1px solid ${BORDER}` }}>
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full" style={{ background: "#ff5f57" }} />
-            <span className="w-3 h-3 rounded-full" style={{ background: "#febc2e" }} />
-            <span className="w-3 h-3 rounded-full" style={{ background: "#28c840" }} />
+            <span className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full" style={{ background: "#ff5f57" }} />
+            <span className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full" style={{ background: "#febc2e" }} />
+            <span className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full" style={{ background: "#28c840" }} />
           </div>
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="text-[13px]" style={{ color: MUTED }}>Koryphaios</span>
+            <span className="text-xs md:text-[13px]" style={{ color: MUTED }}>Koryphaios</span>
           </div>
         </div>
 
-        <div className="flex" style={{ height: 680 }}>
+        <MobilePreview isMobile={useIsMobile()} phase={phase} koryPhase={koryPhase} typed={typed} typeDone={typeDone} prompt={prompt} />
+
+        <div className="hidden md:flex" style={{ height: 680 }}>
 
           {/* ── SIDEBAR (SessionSidebar.svelte) ───────────────────────── */}
           <nav className="shrink-0 flex flex-col" style={{ width: 220, background: S1, borderRight: `1px solid ${BORDER}` }}>
@@ -639,7 +653,7 @@ export default function AppPreview() {
             </div>
 
             {/* ── SourceControlPanel (SourceControlPanel.svelte) ─────── */}
-            <aside className="shrink-0 flex flex-col border-l" style={{ width: 220, borderColor: BORDER, background: S1 }}>
+            <aside className="hidden lg:flex shrink-0 flex-col border-l" style={{ width: 220, borderColor: BORDER, background: S1 }}>
               <div className="flex items-center justify-between px-3 py-3 border-b relative" style={{ borderColor: BORDER }}>
                 <div className="flex items-center gap-2">
                   <GitCommit size={14} style={{ color: TEXT2 }} />
@@ -694,5 +708,248 @@ export default function AppPreview() {
         </div>
       </div>
     </motion.div>
+  );
+}
+
+/* ── Mobile Preview Component ─────────────────────────────────────────── */
+function MobilePreview({ isMobile, phase, koryPhase, typed, typeDone, prompt }: { 
+  isMobile: boolean; 
+  phase: number; 
+  koryPhase: string | null;
+  typed: string;
+  typeDone: boolean;
+  prompt: string;
+}) {
+  if (!isMobile) return null;
+  
+  function wStatus(w: typeof WORKERS[0]): "idle" | "active" | "done" { return phase >= 7 ? "done" : phase >= 3 ? "active" : "idle"; }
+  function wAgentStatus(w: typeof WORKERS[0]): string { return phase >= 7 ? "done" : phase >= 4 ? "tool_calling" : phase >= 3 ? "thinking" : "idle"; }
+  function wTokens(w: typeof WORKERS[0]) { return phase >= 5 ? (w.id === "frontend" ? 34200 : w.id === "backend" ? 28700 : 22100) : phase >= 3 ? (w.id === "frontend" ? 8100 : w.id === "backend" ? 5300 : 4200) : 0; }
+  function wStatusText(w: typeof WORKERS[0]) { return phase >= 7 ? "Complete" : phase >= 4 ? (w.id === "frontend" ? "Tool: write_file" : w.id === "backend" ? "Generating..." : "Tool: write_file") : phase >= 3 ? "Thinking..." : "Idle"; }
+  
+  return (
+    <div className="md:hidden flex flex-col" style={{ height: 520, background: S0 }}>
+      {/* Mobile Header */}
+      <header className="flex items-center justify-between px-3 py-2 border-b shrink-0" style={{ borderColor: BORDER, background: S1 }}>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center w-7 h-7 shrink-0 overflow-hidden" style={{ background: "transparent" }}>
+            <img src="/logo-64.png" alt="K" width={24} height={24} className="object-contain" />
+          </div>
+          {koryPhase && (
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded" style={{ background: S2 }}>
+              <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+              <span className="text-[10px]" style={{ color: TEXT2 }}>Kory: {koryPhase}</span>
+            </div>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5">
+          {phase >= 3 && (
+            <div className="flex items-center gap-1 px-2 py-1 rounded" style={{ background: S2 }}>
+              <Activity size={10} color="#34d399" />
+              <span className="text-[10px]" style={{ color: TEXT2 }}>3 agents</span>
+            </div>
+          )}
+        </div>
+      </header>
+
+      {/* Mobile Worker Cards - Horizontal scroll */}
+      <AnimatePresence>
+        {phase >= 3 && (
+          <motion.div
+            className="flex gap-2 overflow-x-auto px-3 py-2 border-b shrink-0"
+            style={{ borderColor: BORDER, background: S1 }}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+          >
+            {WORKERS.map((w, i) => {
+              const ws = wStatus(w);
+              const agentStatus = wAgentStatus(w);
+              const isActive = ws === "active";
+              const tokens = wTokens(w);
+              const contextPct = w.ctxMax > 0 ? Math.min((tokens / w.ctxMax) * 100, 100) : 0;
+              const ctxColor = contextPct > 80 ? "#ef4444" : contextPct > 50 ? "#f59e0b" : "#22c55e";
+              return (
+                <motion.div
+                  key={w.id}
+                  className="rounded-lg shrink-0"
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: isActive ? 1 : 0.6 }}
+                  transition={{ delay: i * 0.1 }}
+                  style={{
+                    background: S2, border: `1px solid ${BORDER}`,
+                    padding: "6px 10px",
+                    minWidth: 140,
+                    boxShadow: isActive ? `0 0 8px ${w.color}40` : "none",
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <AnimatedStatusIcon status={agentStatus} size={12} />
+                      <span className="text-[11px] font-medium" style={{ color: TEXT }}>{w.name}</span>
+                    </div>
+                    {isActive && <span className="text-[8px] px-1 py-0.5 rounded" style={{ background: S3, color: MUTED }}>{w.domain}</span>}
+                  </div>
+                  {isActive && (
+                    <>
+                      <div className="flex items-center justify-between mt-1">
+                        <span style={{ fontSize: 9, color: agentStatus === "done" ? SUCCESS : TEXT2 }}>{wStatusText(w)}</span>
+                      </div>
+                      {tokens > 0 && (
+                        <div className="mt-1">
+                          <div className="h-1 rounded-full overflow-hidden" style={{ background: S3 }}>
+                            <motion.div className="h-full rounded-full" style={{ background: ctxColor }} initial={{ width: 0 }} animate={{ width: `${contextPct}%` }} transition={{ duration: 1.5 }} />
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Feed */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex items-center px-3 py-2 border-b shrink-0" style={{ borderColor: BORDER, background: S1 }}>
+          <MessageSquare size={14} style={{ color: TEXT2 }} />
+          <span className="ml-2 text-xs" style={{ color: TEXT2 }}>Agent Feed</span>
+        </div>
+        
+        <div className="flex-1 overflow-y-auto p-3" style={{ background: S0 }}>
+          {/* Empty state */}
+          {phase === 0 && (
+            <div className="flex flex-col items-center justify-center text-center h-full py-4">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ background: "rgba(245,158,11,0.10)", color: WARNING }}>
+                <MessageSquare size={18} />
+              </div>
+              <h2 className="text-sm font-semibold mb-1" style={{ color: TEXT }}>Ready for your request</h2>
+              <p className="text-xs mb-3" style={{ color: MUTED }}>Start a new project or collaborate with agents.</p>
+              <div className="grid grid-cols-2 gap-2 w-full">
+                {["UI Component", "Debug Issue", "Performance", "Unit Tests"].map((label) => (
+                  <div key={label} className="p-2 rounded-lg border text-center" style={{ background: S2, borderColor: BORDER }}>
+                    <span className="text-[10px]" style={{ color: TEXT }}>{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* User message */}
+          {phase >= 1 && (
+            <motion.div className="mb-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+              <div className="flex items-start gap-2 p-2 rounded-lg" style={{ background: `${ACCENT}10` }}>
+                <Send size={12} color={ACCENT} className="mt-0.5 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] font-semibold" style={{ color: ACCENT }}>you</span>
+                  <div className="mt-0.5 text-xs" style={{ color: TEXT }}>
+                    {typed}{!typeDone && <span className="inline-block w-1.5 h-3 ml-0.5 animate-pulse align-middle" style={{ background: ACCENT }} />}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Manager analyzing */}
+          {phase >= 2 && (
+            <motion.div className="mb-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+              <div className="flex items-start gap-2 p-2 rounded-lg" style={{ background: S2 }}>
+                <AnimatedStatusIcon status={phase < 3 ? "analyzing" : "done"} size={12} />
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] font-semibold" style={{ color: WARNING }}>manager</span>
+                  <span className="ml-1.5 text-[8px] px-1 py-0.5 rounded" style={{ color: WARNING, background: `${WARNING}20` }}>analyzing</span>
+                  <div className="mt-0.5 text-[11px]" style={{ color: TEXT2 }}>decomposing into 3 subtasks...</div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Manager routing */}
+          {phase >= 3 && (
+            <motion.div className="mb-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+              <div className="flex items-start gap-2 p-2 rounded-lg" style={{ background: S2 }}>
+                <AnimatedStatusIcon status="done" size={12} />
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] font-semibold" style={{ color: WARNING }}>manager</span>
+                  <span className="ml-1.5 text-[8px] px-1 py-0.5 rounded" style={{ color: WARNING, background: `${WARNING}20` }}>routing</span>
+                  <div className="mt-0.5 text-[11px]" style={{ color: TEXT2 }}>frontend • backend • testing</div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Worker entries */}
+          {phase >= 4 && (
+            <div className="space-y-2 mb-2">
+              {[
+                { time: "14:32", nameColor: "#00cccc", name: "frontend", file: "Dashboard.svelte" },
+                { time: "14:32", nameColor: "#4285f4", name: "backend", file: "+server.ts" },
+              ].map((e) => (
+                <motion.div key={e.name} className="flex items-start gap-2 p-2 rounded-lg" style={{ background: S2 }} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
+                  <AnimatedStatusIcon status={phase >= 7 ? "done" : "tool_calling"} size={12} />
+                  <div className="flex-1 min-w-0">
+                    <span className="text-[10px] font-semibold" style={{ color: e.nameColor }}>{e.name}</span>
+                    <div className="text-[11px] truncate" style={{ color: TEXT2 }}>{e.file}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+
+          {/* Critic */}
+          {phase >= 7 && (
+            <motion.div className="mb-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+              <div className="flex items-start gap-2 p-2 rounded-lg" style={{ background: S2 }}>
+                <AnimatedStatusIcon status="verifying" size={12} />
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] font-semibold" style={{ color: WARNING }}>critic</span>
+                  <span className="ml-1.5 text-[8px] px-1 py-0.5 rounded" style={{ color: WARNING, background: `${WARNING}20` }}>reviewing</span>
+                  <div className="mt-0.5 text-[11px]" style={{ color: TEXT2 }}>
+                    reviewed 5 files... <span style={{ color: SUCCESS, fontWeight: 600 }}>PASS</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Shadow commit */}
+          {phase >= 8 && (
+            <motion.div className="mb-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+              <div className="flex items-start gap-2 p-2 rounded-lg" style={{ background: `${ACCENT}15`, border: `1px solid ${ACCENT}30` }}>
+                <AnimatedStatusIcon status="done" size={12} />
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] font-semibold" style={{ color: "#8b5cf6" }}>shadow</span>
+                  <span className="ml-1.5 text-[8px] px-1 py-0.5 rounded" style={{ color: "#8b5cf6", background: "#8b5cf620" }}>commit</span>
+                  <div className="mt-0.5 text-[11px]" style={{ color: TEXT2 }}>saved → a3f2c1d</div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Stats */}
+          {phase >= 8 && (
+            <motion.div className="flex items-center justify-between px-2 py-2 rounded" style={{ background: S3, fontSize: 9, color: MUTED }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <span>5 files</span>
+              <span>270 lines</span>
+              <span style={{ color: WARNING }}>$0.12</span>
+            </motion.div>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile Input */}
+      <div className="shrink-0 border-t p-3" style={{ borderColor: BORDER, background: S1 }}>
+        <div className="flex items-center gap-2">
+          <div className="flex-1 rounded-lg flex items-center px-3" style={{ background: S2, border: `1px solid ${BORDER}`, height: 40, fontSize: 13, color: MUTED }}>
+            <span className="truncate">Describe what you want...</span>
+          </div>
+          <button className="flex items-center justify-center rounded-lg shrink-0" style={{ width: 40, height: 40, background: ACCENT, color: "white" }}>
+            <Send size={16} />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
