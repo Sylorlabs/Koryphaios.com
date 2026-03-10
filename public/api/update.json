@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "notes": "## What's New in v0.2.0\n\n- Feature: Automatic update checking every 2 hours with manual check option\n- Feature: New changelog page at koryphaios.com/changelog\n- Improvement: Enhanced update system with codeword verification\n- Improvement: Better error handling for provider connections\n- Fix: Fixed memory cleanup issues in long-running sessions\n\n[View full changelog](https://koryphaios.com/changelog)",
+  "pub_date": "2026-03-09T00:00:00Z",
+  "codeword": "PUBLISH",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "",
+      "url": "https://github.com/sylorlabs/koryphaios/releases/download/v0.2.0/Koryphaios_0.2.0_aarch64.dmg"
+    },
+    "darwin-x86_64": {
+      "signature": "",
+      "url": "https://github.com/sylorlabs/koryphaios/releases/download/v0.2.0/Koryphaios_0.2.0_x64.dmg"
+    },
+    "linux-x86_64": {
+      "signature": "",
+      "url": "https://github.com/sylorlabs/koryphaios/releases/download/v0.2.0/koryphaios_0.2.0_amd64.AppImage"
+    },
+    "windows-x86_64": {
+      "signature": "",
+      "url": "https://github.com/sylorlabs/koryphaios/releases/download/v0.2.0/Koryphaios_0.2.0_x64-setup.exe"
+    }
+  }
+}
