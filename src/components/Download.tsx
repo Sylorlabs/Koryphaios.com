@@ -100,12 +100,12 @@ export default function Download() {
         >
           <span className="kintsugi-badge mb-6 inline-flex">Download</span>
           <h2 className="text-3xl md:text-5xl font-bold text-[var(--porcelain)] mb-4">
-            Every platform. Zero excuses.
+            Every platform. Native performance.
           </h2>
           <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
             Built with Tauri for native performance on every operating system.
             While VS Code forks like Cursor routinely consume 800MB to 2GB+ of RAM with extensions loaded,
-            Koryphaios runs as a lightweight native binary under 100MB. No Electron bloat.
+            Koryphaios runs as a lightweight native binary. No Electron bloat.
           </p>
         </motion.div>
 

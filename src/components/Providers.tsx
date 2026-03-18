@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 interface Provider {
   name: string;
   url: string;
-  /** filename in /providers/ (without extension), tries .png first */
+  /** filename in /providers/ (without extension), uses .svg */
   img: string;
 }
 
@@ -13,12 +13,16 @@ function ProviderLogo({ img, name }: { img: string; name: string }) {
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
     <img
-      src={`/providers/${img}.png`}
+      src={`/providers/${img}.svg`}
       alt={name}
       width={32}
       height={32}
       className="rounded-md object-contain flex-shrink-0"
       style={{ imageRendering: "auto" }}
+      onError={(e) => {
+        // Fallback to PNG if SVG doesn't exist
+        (e.target as HTMLImageElement).src = `/providers/${img}.png`;
+      }}
     />
   );
 }
@@ -110,7 +114,7 @@ export default function Providers() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <span className="kintsugi-badge mb-6 inline-flex">40+ Providers</span>
+          <span className="kintsugi-badge mb-6 inline-flex">Providers</span>
           <h2 className="text-3xl md:text-5xl font-bold text-[var(--porcelain)] mb-4">
             Every model. One dashboard.
           </h2>

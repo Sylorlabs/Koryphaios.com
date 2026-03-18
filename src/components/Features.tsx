@@ -20,9 +20,9 @@ const features: Feature[] = [
         <path d="M16 3.13a4 4 0 010 7.75"/>
       </svg>
     ),
-    title: "Manager Worker Critic",
-    desc: "Every output routes through a read-only Critic that gates with PASS or FAIL. Bad code never reaches you — it's baked into the architecture.",
-    highlight: "Quality gate at the core",
+    title: "Self-Checking AI Team",
+    desc: "Every change gets reviewed by a Critic agent before it reaches you. Bad code is caught automatically — not your problem.",
+    highlight: "Quality without the effort",
   },
   {
     icon: (
@@ -32,8 +32,8 @@ const features: Feature[] = [
       </svg>
     ),
     title: "Ghost Commits",
-    desc: "Dangling git objects stored off your branch with full metadata: cost, tokens, model, prompt hash. Roll back to any state. Your history stays clean.",
-    highlight: "Time travel for your code",
+    desc: "Every AI change saved with full context — cost, tokens, model used. Clean git history, easy rollbacks. Know exactly what each change cost you.",
+    highlight: "Undo without the mess",
   },
   {
     icon: (
@@ -44,9 +44,9 @@ const features: Feature[] = [
         <rect x="13" y="13" width="9" height="9" rx="1"/>
       </svg>
     ),
-    title: "Parallel Agent Isolation",
-    desc: "Workers run in separate git worktrees with API-level path enforcement. No race conditions, no overwrites, no surprises.",
-    highlight: "True isolation",
+    title: "Parallel Agents",
+    desc: "Multiple AI specialists work on different parts at the same time without stepping on each other. Frontend, backend, tests — all at once.",
+    highlight: "Parallel execution, fewer conflicts",
   },
   {
     icon: (
@@ -67,9 +67,9 @@ const features: Feature[] = [
         <line x1="12" y1="17" x2="12" y2="21"/>
       </svg>
     ),
-    title: "MCP Integration",
-    desc: "Stdio and SSE transports, full tool, resource, and prompt support. Plug in any MCP server and your agents use it immediately.",
-    highlight: "Universal compatibility",
+    title: "Works With Your Stack",
+    desc: "Bring your own API keys for Claude, OpenAI, and 40+ providers. Plug in any MCP server or tool. No vendor lock-in.",
+    highlight: "Plays nice with others",
   },
   {
     icon: (
@@ -78,9 +78,9 @@ const features: Feature[] = [
         <path d="M7 11V7a5 5 0 0110 0v4"/>
       </svg>
     ),
-    title: "Role Based Security",
-    desc: "Three permission tiers enforced at the API level: Manager (full access), Workers (path-restricted), Critic (read-only). JWT auth, rate limiting, encrypted storage.",
-    highlight: "Defense in depth",
+    title: "Your Code Stays Yours",
+    desc: "Local-first with encrypted storage. Agents only access what they need. No data sent to us — your API keys, your providers, your machine.",
+    highlight: "Privacy by design",
   },
   {
     icon: (
@@ -88,9 +88,9 @@ const features: Feature[] = [
         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
       </svg>
     ),
-    title: "Real Time Streaming",
-    desc: "WebSocket first, SSE fallback. 30+ event types: agent spawns, tool calls, Critic verdicts, cost updates. Full observability, zero black boxes.",
-    highlight: "See everything",
+    title: "Watch It Happen",
+    desc: "See agents spawn, work, and finish in real time. No black boxes — you know what's happening and what it costs as it happens.",
+    highlight: "Full visibility",
   },
   {
     icon: (

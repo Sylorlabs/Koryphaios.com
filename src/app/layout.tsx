@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://koryphaios.com"),
   title: "Koryphaios — AI Agent Orchestration Platform",
   description:
-    "Stop wrestling with AI agents. Koryphaios orchestrates 120+ LLM providers with a Manager Worker Critic architecture, time travel undo, parallel agents, and cost tracking. Open source. Free.",
+    "Stop wrestling with AI agents. Koryphaios orchestrates LLM providers with a Manager Worker Critic architecture, time travel undo, parallel agents, and cost tracking. Open source. Free.",
   keywords: [
     "AI agent orchestration",
     "LLM",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Koryphaios — AI Agent Orchestration Platform",
     description:
-      "Orchestrate 120+ AI providers from one dashboard. Manager Worker Critic architecture, time travel undo, cost tracking. Open source.",
+      "Orchestrate AI providers from one dashboard. Manager Worker Critic architecture, time travel undo, cost tracking. Open source.",
     type: "website",
     url: "https://koryphaios.com",
     images: [{ url: "/logo-512.png", width: 512, height: 512 }],
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Koryphaios — AI Agent Orchestration Platform",
     description:
-      "Orchestrate 120+ AI providers from one dashboard. Open source, free, no markup.",
+      "Orchestrate AI providers from one dashboard. Open source, free, no markup.",
   },
   robots: { index: true, follow: true },
 };

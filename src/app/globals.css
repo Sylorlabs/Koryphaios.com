@@ -211,3 +211,15 @@ button:focus-visible {
   scrollbar-width: thin;
   scrollbar-color: rgba(213, 178, 97, 0.3) rgba(13, 11, 10, 0.5);
 }
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -27,7 +27,7 @@ export default function OpenSource() {
           <p className="text-[var(--text-secondary)] text-lg mb-8 max-w-2xl mx-auto">
             Apache 2.0 licensed. Full source. No telemetry. No vendor lock-in.
             You pay your providers directly at their published rates — we add
-            zero markup, zero fees, zero hidden costs. The code is yours.
+            no markup, no fees, no hidden costs. The code is yours.
           </p>
         </motion.div>
 

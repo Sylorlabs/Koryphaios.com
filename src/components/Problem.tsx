@@ -32,7 +32,7 @@ const problems = [
       </svg>
     ),
     title: "No Safety Net",
-    desc: "AI breaks your code and undoing means messy commits with zero context about what was tried or what it cost.",
+    desc: "AI breaks your code and undoing means messy commits with no context about what was tried or what it cost.",
   },
 ];
 
