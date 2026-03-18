@@ -50,11 +50,11 @@ export default function Problem() {
           <span className="kintsugi-badge mb-6 inline-flex">The Problem</span>
 
           <h2 className="text-3xl md:text-5xl font-bold mb-4 text-[var(--porcelain)]">
-            Your workflow is broken.
+            You're the human router.
           </h2>
           <p className="text-[var(--text-secondary)] max-w-2xl mx-auto mb-12">
-            Multi-agent tools exist, but you're still the manager — switching models,
-            reviewing output, tracking costs. That's not vibe coding. That's infrastructure work.
+            Switching tabs, comparing outputs, tracking spend across a dozen providers.
+            You're not coding — you're managing infrastructure.
           </p>
 
           <div className="grid md:grid-cols-3 gap-6">
