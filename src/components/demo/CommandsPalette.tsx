@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState, useMemo, useCallback } from "react";
 import { Search, Plus, Send, GitCommit, RefreshCw, Paintbrush, Terminal, Beaker, MessageSquare, Key, Settings, Command } from "lucide-react";
-import { S1, S3, BORDER, TEXT, TEXT2, MUTED, ACCENT, COMMANDS } from "./types";
+import { S1, S2, S3, BORDER, TEXT, TEXT2, MUTED, ACCENT, COMMANDS } from "./types";
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; style?: React.CSSProperties }>> = {
   Plus, Send, GitCommit, RefreshCw, Paintbrush, Terminal, Beaker, MessageSquare, Key, Settings, Command
@@ -29,20 +28,6 @@ export const CommandsPalette = ({ onClose, onSelectWorker, onOpenSettings }: Com
     [allCommands, search]
   );
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowDown") setSelectedIndex(i => Math.min(i + 1, filteredCommands.length - 1));
-      if (e.key === "ArrowUp") setSelectedIndex(i => Math.max(i - 1, 0));
-      if (e.key === "Enter") {
-        const cmd = filteredCommands[selectedIndex];
-        if (cmd) handleSelect(cmd);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [filteredCommands, selectedIndex, onClose]);
-
   const handleSelect = useCallback((cmd: typeof allCommands[0]) => {
     if (cmd.name.includes("Frontend")) onSelectWorker("frontend");
     else if (cmd.name.includes("Backend")) onSelectWorker("backend");
@@ -56,20 +41,19 @@ export const CommandsPalette = ({ onClose, onSelectWorker, onOpenSettings }: Com
   }, [onClose, onSelectWorker, onOpenSettings]);
 
   return (
-    <motion.div
+    <div
       className="absolute inset-0 z-50 flex items-start justify-center pt-20"
       style={{ background: "rgba(0,0,0,0.5)" }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
       onClick={onClose}
     >
-      <motion.div
+      <div
         className="w-full max-w-lg rounded-xl overflow-hidden"
-        style={{ background: S1, border: `1px solid ${BORDER}` }}
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: -20, opacity: 0 }}
+        style={{ 
+          background: S1, 
+          border: `1px solid ${BORDER}`,
+          animation: "paletteFadeIn 0.15s ease-out",
+          willChange: "transform, opacity"
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search */}
@@ -112,7 +96,7 @@ export const CommandsPalette = ({ onClose, onSelectWorker, onOpenSettings }: Com
                   <button
                     onClick={() => handleSelect(cmd)}
                     onMouseEnter={() => setSelectedIndex(index)}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors"
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-left transition-all duration-150"
                     style={{ background: isSelected ? `${ACCENT}20` : "transparent" }}
                   >
                     <Icon size={16} style={{ color: isSelected ? ACCENT : MUTED }} />
@@ -135,7 +119,20 @@ export const CommandsPalette = ({ onClose, onSelectWorker, onOpenSettings }: Com
           </div>
           <span>{filteredCommands.length} commands</span>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+      
+      <style jsx>{`
+        @keyframes paletteFadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </div>
   );
 };
