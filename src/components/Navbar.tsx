@@ -9,6 +9,7 @@ const navLinks = [
   { name: "Providers", href: "#providers" },
   { name: "Architecture", href: "#architecture" },
   { name: "Download", href: "/download" },
+  { name: "README", href: "https://github.com/Sylorlabs/Koryphaios/blob/main/README.md" },
 ];
 
 export default function Navbar() {
@@ -50,6 +51,8 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={link.href.startsWith("http") ? "noreferrer" : undefined}
               className="text-sm text-[var(--text-secondary)] hover:text-[var(--kintsugi-gold)] transition-colors"
             >
               {link.name}
@@ -105,6 +108,8 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={link.href.startsWith("http") ? "noreferrer" : undefined}
               className="block text-sm text-[var(--text-secondary)] hover:text-[var(--kintsugi-gold)]"
               onClick={() => setMobileOpen(false)}
             >

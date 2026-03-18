@@ -54,7 +54,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.p
-          className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-10"
+          className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-4"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
@@ -64,8 +64,17 @@ export default function Hero() {
           One prompt. Multiple agents. No babysitting.
         </motion.p>
 
+        <motion.p
+          className="text-sm text-[var(--kintsugi-gold)] max-w-2xl mx-auto mb-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Built for engineers who ship with AI, not engineers who want to manage AI.
+        </motion.p>
+
         <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -92,6 +101,38 @@ export default function Hero() {
             </svg>
             Star on GitHub
           </a>
+        </motion.div>
+
+        {/* Quick Start */}
+        <motion.div
+          className="mb-12 max-w-xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="kintsugi-panel p-5 text-left font-mono text-sm">
+            <p className="text-[var(--text-secondary)] mb-2 text-xs uppercase tracking-wider flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--kintsugi-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="4 17 10 11 4 5"/>
+                <line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+              Quick Start
+            </p>
+            <div className="space-y-1 text-[var(--text-secondary)]">
+              <p>
+                <span className="text-[var(--kintsugi-gold)]">$</span> git clone https://github.com/Sylorlabs/Koryphaios.git
+              </p>
+              <p>
+                <span className="text-[var(--kintsugi-gold)]">$</span> cd Koryphaios && bun install
+              </p>
+              <p>
+                <span className="text-[var(--kintsugi-gold)]">$</span> cp config.example.json koryphaios.json
+              </p>
+              <p>
+                <span className="text-[var(--kintsugi-gold)]">$</span> bun run dev
+              </p>
+            </div>
+          </div>
         </motion.div>
 
         {/* App preview window */}
